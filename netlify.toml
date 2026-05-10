@@ -1,0 +1,9 @@
+[build]
+  base = "navy-frontend"
+  command = "npm run build"
+  publish = "dist/navy-frontend"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
