@@ -16,8 +16,10 @@ endpoints.post("/admin/login", async (req, resp) => {
       token: token,
     });
   } catch (err) {
-    resp.status(401).send({
-      erro: err.message,
+    console.log(err);
+    
+    resp.status(400).send({
+      erro: err.message || err.detail || String(err),
     });
   }
 });

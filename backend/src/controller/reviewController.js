@@ -19,8 +19,10 @@ endpoints.post("/reviews", autenticar, uploadReview.single("imagem"), async (req
       id: id,
     });
   } catch (err) {
+    console.log(err);
+    
     resp.status(400).send({
-      erro: err.message,
+      erro: err.message || err.detail || String(err),
     });
   }
 });

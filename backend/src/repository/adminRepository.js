@@ -1,13 +1,13 @@
 import connection from "./connection.js";
 
 export async function login(email, senha) {
-  let comando = `
+  const comando = `
     SELECT id, email
     FROM admin
-    WHERE email = ? AND senha = MD5(?)
-    `;
+    WHERE email = $1 AND senha = MD5($2)
+  `;
 
-  const [linhas] = await connection.query(comando, [email, senha]);
+  const resposta = await connection.query(comando, [email, senha]);
 
-  return linhas[0];
+  return resposta.rows[0];
 }

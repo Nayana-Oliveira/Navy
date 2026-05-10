@@ -1,88 +1,89 @@
 import connection from "./connection.js";
 
 export async function inserirReview(review) {
-  let comando = `
+  const comando = `
     INSERT INTO reviews
     (
-        titulo,
-        tipo,
-        nota,
-        texto,
-        imagem,
-        link
+      titulo,
+      tipo,
+      nota,
+      texto,
+      imagem,
+      link
     )
-    VALUES (?, ?, ?, ?, ?, ?)
-    `;
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING id
+  `;
 
-  const [resposta] = await connection.query(comando, [
+  const resposta = await connection.query(comando, [
     review.titulo,
     review.tipo,
     review.nota,
     review.texto,
-    review.imagem,
-    review.link,
+    review.imagem || null,
+    review.link || null,
   ]);
 
-  return resposta.insertId;
+  return resposta.rows[0].id;
 }
 
 export async function listarReviews() {
-  let comando = `
+  const comando = `
     SELECT *
     FROM reviews
     ORDER BY criado_em DESC
-    `;
+  `;
 
-  const [linhas] = await connection.query(comando);
+  const resposta = await connection.query(comando);
 
-  return linhas;
+  return resposta.rows;
 }
 
 export async function buscarPorId(id) {
-  let comando = `
+  const comando = `
     SELECT *
     FROM reviews
-    WHERE id = ?
-    `;
+    WHERE id = $1
+  `;
 
-  const [linhas] = await connection.query(comando, [id]);
+  const resposta = await connection.query(comando, [id]);
 
-  return linhas[0];
+  return resposta.rows[0];
 }
 
 export async function alterarReview(id, review) {
-  let comando = `
+  const comando = `
     UPDATE reviews
     SET
-        titulo = ?,
-        tipo = ?,
-        nota = ?,
-        texto = ?,
-        imagem = ?,
-        link = ?
-    WHERE id = ?
-    `;
+      titulo = $1,
+      tipo = $2,
+      nota = $3,
+      texto = $4,
+      imagem = COALESCE($5, imagem),
+      link = $6
+    WHERE id = $7
+  `;
 
-  const [resposta] = await connection.query(comando, [
+  const resposta = await connection.query(comando, [
     review.titulo,
     review.tipo,
     review.nota,
     review.texto,
-    review.imagem,
-    review.link,
+    review.imagem || null,
+    review.link || null,
     id,
   ]);
 
-  return resposta.affectedRows;
+  return resposta.rowCount;
 }
 
 export async function deletarReview(id) {
-  let comando = `
+  const comando = `
     DELETE FROM reviews
-    WHERE id = ?
-    `;
+    WHERE id = $1
+  `;
 
-  const [resposta] = await connection.query(comando, [id]);
+  const resposta = await connection.query(comando, [id]);
 
-  return resposta.affectedRows;
+  return resposta.rowCount;
 }
