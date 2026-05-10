@@ -71,9 +71,9 @@ export class Home implements OnInit {
     }
 
     if (imagem.startsWith('/')) {
-      return 'http://localhost:5010' + imagem;
+      return 'https://navy-blogg.netlify.app/' + imagem;
     }
 
-    return 'http://localhost:5010/' + imagem;
+    return 'https://navy-blogg.netlify.app/' + imagem;
   }
 }

@@ -9,7 +9,7 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AdminService {
-  private api = 'http://localhost:5010/admin';
+  private api = 'https://navy-blogg.netlify.app/admin';
 
   constructor(private http: HttpClient) {}
 
