@@ -1,31 +1,37 @@
 import { Router } from "express";
 import * as service from "../service/reviewService.js";
 import uploadReview from "../utils/uploadReview.js";
-import autenticar from '../middlewares/autenticacao.js'
+import autenticar from "../middlewares/autenticacao.js";
+import { uploadImagem } from "../utils/uploadSupabase.js";
 
 const endpoints = Router();
 
-endpoints.post("/reviews", autenticar, uploadReview.single("imagem"), async (req, resp) => {
-  try {
-    let review = req.body;
+endpoints.post(
+  "/reviews",
+  autenticar,
+  uploadReview.single("imagem"),
+  async (req, resp) => {
+    try {
+      let review = req.body;
 
-    if (req.file) {
-      review.imagem = "/public/storage/reviews/" + req.file.filename;
+      if (req.file) {
+        review.imagem = await uploadImagem(req.file, "reviews");
+      }
+
+      let id = await service.inserirReview(review);
+
+      resp.status(201).send({
+        id: id,
+      });
+    } catch (err) {
+      console.log(err);
+
+      resp.status(400).send({
+        erro: err.message || err.detail || String(err),
+      });
     }
-
-    let id = await service.inserirReview(review);
-
-    resp.status(201).send({
-      id: id,
-    });
-  } catch (err) {
-    console.log(err);
-    
-    resp.status(400).send({
-      erro: err.message || err.detail || String(err),
-    });
-  }
-});
+  },
+);
 
 endpoints.get("/reviews", async (req, resp) => {
   try {
@@ -53,7 +59,11 @@ endpoints.get("/reviews/:id", async (req, resp) => {
   }
 });
 
-endpoints.put("/reviews/:id", autenticar, uploadReview.single("imagem"), async (req, resp) => {
+endpoints.put(
+  "/reviews/:id",
+  autenticar,
+  uploadReview.single("imagem"),
+  async (req, resp) => {
     try {
       let id = req.params.id;
       let review = req.body;

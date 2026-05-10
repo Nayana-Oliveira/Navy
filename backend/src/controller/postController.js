@@ -2,28 +2,34 @@ import { Router } from "express";
 import * as service from "../service/postService.js";
 import upload from "../utils/upload.js";
 import autenticar from "../middlewares/autenticacao.js";
+import { uploadImagem } from "../utils/uploadSupabase.js";
 
 const endpoints = Router();
 
-endpoints.post("/posts", autenticar,  upload.single("imagem"), async (req, resp) => {
-  try {
-    let post = req.body;
+endpoints.post(
+  "/posts",
+  autenticar,
+  upload.single("imagem"),
+  async (req, resp) => {
+    try {
+      let post = req.body;
 
-    if (req.file) {
-      post.imagem = "/public/storage/posts/" + req.file.filename;
+      if (req.file) {
+        post.imagem = "/public/storage/posts/" + req.file.filename;
+      }
+
+      let id = await service.inserirPost(post);
+
+      resp.status(201).send({
+        id: id,
+      });
+    } catch (err) {
+      resp.status(400).send({
+        erro: err.message,
+      });
     }
-
-    let id = await service.inserirPost(post);
-
-    resp.status(201).send({
-      id: id,
-    });
-  } catch (err) {
-    resp.status(400).send({
-      erro: err.message,
-    });
-  }
-});
+  },
+);
 
 endpoints.get("/posts", async (req, resp) => {
   try {
@@ -32,7 +38,7 @@ endpoints.get("/posts", async (req, resp) => {
     resp.send(registros);
   } catch (err) {
     console.log(err);
-    
+
     resp.status(400).send({
       erro: err.message || err.detail || String(err),
     });
@@ -53,25 +59,30 @@ endpoints.get("/posts/:id", async (req, resp) => {
   }
 });
 
-endpoints.put("/posts/:id", autenticar, upload.single("imagem"), async (req, resp) => {
-  try {
-    let id = req.params.id;
+endpoints.put(
+  "/posts/:id",
+  autenticar,
+  upload.single("imagem"),
+  async (req, resp) => {
+    try {
+      let id = req.params.id;
 
-    let post = req.body;
+      let post = req.body;
 
-    if (req.file) {
-      post.imagem = "/public/storage/posts/" + req.file.filename;
+      if (req.file) {
+        post.imagem = await uploadImagem(req.file, "posts");
+      }
+
+      await service.alterarPost(id, post);
+
+      resp.status(204).send();
+    } catch (err) {
+      resp.status(400).send({
+        erro: err.message,
+      });
     }
-
-    await service.alterarPost(id, post);
-
-    resp.status(204).send();
-  } catch (err) {
-    resp.status(400).send({
-      erro: err.message,
-    });
-  }
-});
+  },
+);
 
 endpoints.delete("/posts/:id", autenticar, async (req, resp) => {
   try {
