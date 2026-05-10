@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://navy.vercel.app/sitemap.xml
+Sitemap: https://navy-blogg.netlify.app/
