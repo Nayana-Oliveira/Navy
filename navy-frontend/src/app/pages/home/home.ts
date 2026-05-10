@@ -61,19 +61,30 @@ export class Home implements OnInit {
     });
   }
 
-  urlImagem(imagem: string | undefined) {
-    if (!imagem) {
-      return '';
+  resumo(texto: string | undefined, limite = 180) {
+    if (!texto) return '';
+
+    const limpo = texto
+      .replace(/[#>*_`-]/g, '')
+      .replace(/\n/g, ' ')
+      .trim();
+
+    if (limpo.length <= limite) {
+      return limpo;
     }
 
-    if (imagem.startsWith('http')) {
-      return imagem;
-    }
+    return limpo.substring(0, limite) + '...';
+  }
+
+  urlImagem(imagem: string | undefined) {
+    if (!imagem) return '';
+
+    if (imagem.startsWith('http')) return imagem;
 
     if (imagem.startsWith('/')) {
       return 'https://navy-7z14.onrender.com' + imagem;
     }
 
-    return 'https://navy-7z14.onrender.com' + imagem;
+    return 'https://navy-7z14.onrender.com/' + imagem;
   }
 }

@@ -182,6 +182,41 @@
   object-fit: cover;
 }
 
+.post-card p {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.review-img-box {
+  width: 150px;
+  height: 210px;
+  border-radius: 22px;
+  background: #fff8ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.review-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.review-card {
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .review-img-box {
+    width: 100%;
+    height: 280px;
+  }
+}
+
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
