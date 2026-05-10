@@ -1,0 +1,106 @@
+<app-header></app-header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="tag"> blog pessoal </span>
+
+      <h1>dias calmos, música boa e pensamentos perto do mar.</h1>
+
+      <p>
+        Um espaço para guardar textos, reviews, frases soltas, memórias e pequenas coisas bonitas do
+        cotidiano.
+      </p>
+
+      <div class="hero-buttons">
+        <a routerLink="/posts" class="btn"> ver posts </a>
+
+        <a routerLink="/postits" class="btn-outline"> ler notas </a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <p>“o mar também guarda aquilo que a gente não sabe dizer.”</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <span class="tag"> últimos textos </span>
+
+      <h2>Posts recentes</h2>
+    </div>
+
+    <div class="posts-grid">
+      <article class="post-card" *ngFor="let p of posts">
+        <img *ngIf="p.imagem" [src]="urlImagem(p.imagem)" />
+
+        <div class="image-placeholder" *ngIf="!p.imagem"></div>
+
+        <span class="tag">
+          {{ p.categoria }}
+        </span>
+
+        <h3>
+          {{ p.titulo }}
+        </h3>
+
+        <p>
+          {{ p.conteudo }}
+        </p>
+
+        <a [routerLink]="['/posts', p.id]"> continuar lendo </a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section reviews-section">
+    <div class="section-title">
+      <span class="tag"> opiniões afetivas </span>
+
+      <h2>Reviews recentes</h2>
+    </div>
+
+    <div class="reviews-grid">
+      <article class="review-card" *ngFor="let r of reviews">
+        <img *ngIf="r.imagem" [src]="urlImagem(r.imagem)" />
+
+        <div class="cover-placeholder" *ngIf="!r.imagem"></div>
+
+        <div class="review-content">
+          <span class="tag">
+            {{ r.tipo }}
+          </span>
+
+          <h3>
+            {{ r.titulo }}
+          </h3>
+
+          <div class="nota">
+            {{ r.nota }}
+          </div>
+
+          <p>
+            {{ r.texto }}
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">
+      <span class="tag"> frases pequenas </span>
+
+      <h2>Mural de post-its</h2>
+    </div>
+
+    <div class="postits">
+      <div class="postit" *ngFor="let p of postits" [style.background]="p.cor">
+        {{ p.texto }}
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

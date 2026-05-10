@@ -1,0 +1,57 @@
+.footer {
+  padding: 60px 7% 34px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(217, 120, 69, 0.16),
+      rgba(111, 125, 79, 0.12)
+    ),
+    var(--bg);
+
+  border-top: 1px solid rgba(166, 75, 42, 0.18);
+}
+
+.footer-brand {
+  max-width: 520px;
+}
+
+.footer-brand h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 44px;
+  color: var(--terracota);
+}
+
+.footer-brand p {
+  margin-top: 10px;
+  line-height: 1.7;
+  color: var(--soft-text);
+}
+
+.footer nav {
+  margin-top: 34px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+.footer nav a {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.footer-bottom {
+  margin-top: 42px;
+  padding-top: 22px;
+
+  border-top: 1px solid rgba(166, 75, 42, 0.18);
+
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+
+  color: var(--soft-text);
+  font-size: 14px;
+}

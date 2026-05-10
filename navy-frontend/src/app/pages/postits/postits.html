@@ -1,0 +1,28 @@
+<app-header></app-header>
+
+<section class="page-title">
+  <span class="tag">frases pequenas</span>
+
+  <h1>Pequenas notas</h1>
+
+  <p>
+    Um mural de frases curtas, pensamentos soltos e palavras que merecem ficar coladas em algum
+    lugar.
+  </p>
+</section>
+
+<section class="wall">
+  <div class="postits" *ngIf="carregando">
+    <div class="postit skeleton" *ngFor="let item of [1, 2, 3, 4]"></div>
+  </div>
+
+  <p *ngIf="!carregando && postits.length === 0" class="loading">Nenhum post-it encontrado.</p>
+
+  <div class="postits" *ngIf="!carregando && postits.length > 0">
+    <div class="postit" *ngFor="let p of postits" [style.background]="p.cor">
+      {{ p.texto }}
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

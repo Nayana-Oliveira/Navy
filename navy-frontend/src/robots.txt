@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://navy.vercel.app/sitemap.xml

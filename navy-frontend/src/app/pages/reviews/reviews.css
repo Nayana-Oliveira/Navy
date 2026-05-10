@@ -1,0 +1,261 @@
+.filters {
+  padding: 0 7% 30px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  border: 1px solid var(--areia);
+  background: var(--card);
+  padding: 12px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--laranja);
+}
+
+.filters button.active {
+  background: var(--terracota);
+  color: var(--card);
+  border-color: var(--terracota);
+}
+
+.reviews-section {
+  background: #f7e4cf;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+.review-card {
+  background: var(--card);
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px var(--sombra);
+  transition: 0.3s;
+}
+
+.review-card:hover {
+  transform: translateY(-6px);
+}
+
+.cover-placeholder {
+  height: 320px;
+  background:
+    linear-gradient(rgba(63, 42, 34, 0.1), rgba(63, 42, 34, 0.4)),
+    linear-gradient(160deg, var(--marrom), var(--terracota));
+}
+
+.review-content {
+  padding: 24px;
+}
+
+.review-content h3 {
+  margin-top: 10px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 34px;
+}
+
+.nota {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--terracota);
+  color: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 18px;
+}
+
+.review-content p {
+  margin-top: 20px;
+  line-height: 1.7;
+  color: rgba(63, 42, 34, 0.75);
+}
+
+.review-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.search-area {
+  padding: 0 7% 24px;
+}
+
+.search-area input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid var(--areia);
+  border-radius: 999px;
+  background: var(--card);
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  color: var(--marrom);
+  box-shadow: 0 12px 28px var(--sombra);
+}
+
+.loading {
+  color: rgba(63, 42, 34, 0.7);
+  font-weight: 600;
+}
+
+.review-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--terracota);
+  font-weight: 700;
+}
+
+.review-card {
+  cursor: pointer;
+}
+
+.review-card:hover {
+  transform: translateY(-8px);
+}
+
+.read-more {
+  margin-top: 18px;
+  border: none;
+  background: transparent;
+  color: var(--terracota);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 23, 20, 0.72);
+  backdrop-filter: blur(8px);
+  z-index: 99;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+}
+
+.modal-review {
+  width: min(920px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+
+  background: var(--card);
+  color: var(--text);
+
+  border-radius: 34px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+
+  position: relative;
+
+  animation: fadeUp 0.35s ease both;
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: var(--terracota);
+  color: var(--branco);
+
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.modal-img {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  object-fit: cover;
+}
+
+.modal-content {
+  padding: 44px;
+}
+
+.modal-content h2 {
+  margin-top: 12px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.modal-nota {
+  width: fit-content;
+  margin-top: 20px;
+  padding: 12px 18px;
+
+  border-radius: 999px;
+
+  background: var(--terracota);
+  color: var(--branco);
+
+  font-weight: 800;
+}
+
+.modal-content h3 {
+  margin-top: 32px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px;
+}
+
+.modal-content p {
+  margin-top: 16px;
+  line-height: 1.9;
+  color: var(--soft-text);
+  white-space: pre-line;
+}
+
+.modal-content a {
+  display: inline-block;
+  margin-top: 26px;
+
+  color: var(--terracota);
+  font-weight: 800;
+}
+
+@media (max-width: 800px) {
+  .modal-review {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-img {
+    min-height: 280px;
+  }
+
+  .modal-content {
+    padding: 28px;
+  }
+
+  .modal-content h2 {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 900px) {
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}

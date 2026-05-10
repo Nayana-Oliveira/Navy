@@ -1,0 +1,225 @@
+<main class="dashboard">
+  <aside class="sidebar">
+    <h1>Navy</h1>
+
+    <a [class.active]="aba === 'posts'" (click)="trocarAba('posts')"> Posts </a>
+
+    <a [class.active]="aba === 'reviews'" (click)="trocarAba('reviews')"> Reviews </a>
+
+    <a [class.active]="aba === 'postits'" (click)="trocarAba('postits')"> Post-its </a>
+
+    <a (click)="sair()">Sair</a>
+  </aside>
+
+  <section class="dashboard-main">
+    <h2>Painel Admin</h2>
+
+    <div class="stats">
+      <div class="stat-card">
+        <span>Posts</span>
+        <strong>{{ posts.length }}</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Reviews</span>
+        <strong>{{ reviews.length }}</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Post-its</span>
+        <strong>{{ postits.length }}</strong>
+      </div>
+    </div>
+
+    <p class="mensagem" *ngIf="mensagem">{{ mensagem }}</p>
+    <p class="erro" *ngIf="erro">{{ erro }}</p>
+
+    <div class="admin-grid" *ngIf="aba === 'posts'">
+      <div class="admin-panel">
+        <h3>{{ postEditandoId ? 'Editar post' : 'Novo post' }}</h3>
+
+        <form class="form">
+          <input type="text" placeholder="Título" [(ngModel)]="titulo" name="titulo" />
+
+          <select [(ngModel)]="categoria" name="categoria">
+            <option value="">Categoria</option>
+            <option value="Praia">Praia</option>
+            <option value="Música">Música</option>
+            <option value="Memórias">Memórias</option>
+            <option value="Faculdade">Faculdade</option>
+            <option value="Jogo">Jogo</option>
+          </select>
+
+          <textarea placeholder="Conteúdo" [(ngModel)]="conteudo" name="conteudo"></textarea>
+
+          <input
+            type="text"
+            placeholder="Link de vídeo"
+            [(ngModel)]="link_video"
+            name="link_video"
+          />
+
+          <input
+            type="text"
+            placeholder="Link de música"
+            [(ngModel)]="link_musica"
+            name="link_musica"
+          />
+
+          <input
+            type="text"
+            placeholder="Link de podcast"
+            [(ngModel)]="link_podcast"
+            name="link_podcast"
+          />
+
+          <input type="file" (change)="selecionarImagem($event)" />
+
+          <button type="button" (click)="salvarPost()">
+            {{ postEditandoId ? 'Salvar alterações' : 'Salvar post' }}
+          </button>
+
+          <button
+            type="button"
+            class="cancel"
+            *ngIf="postEditandoId"
+            (click)="cancelarEdicaoPost()"
+          >
+            Cancelar edição
+          </button>
+        </form>
+      </div>
+
+      <div class="admin-panel">
+        <h3>Posts cadastrados</h3>
+
+        <div class="table-list">
+          <div class="table-item" *ngFor="let p of posts">
+            <span>{{ p.titulo }}</span>
+
+            <div class="actions">
+              <button class="edit" (click)="editarPost(p)">Editar</button>
+
+              <button class="delete" (click)="excluirPost(p.id)">Excluir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-grid" *ngIf="aba === 'reviews'">
+      <div class="admin-panel">
+        <h3>{{ reviewEditandoId ? 'Editar review' : 'Nova review' }}</h3>
+
+        <form class="form">
+          <input type="text" placeholder="Título" [(ngModel)]="reviewTitulo" name="reviewTitulo" />
+
+          <select [(ngModel)]="reviewTipo" name="reviewTipo">
+            <option value="">Tipo</option>
+            <option value="Anime">Anime</option>
+            <option value="Série">Série</option>
+            <option value="Filme">Filme</option>
+            <option value="Música">Música</option>
+            <option value="Podcast">Podcast</option>
+            <option value="Livro">Livro</option>
+            <option value="Livro">Jogo</option>
+          </select>
+
+          <input
+            type="number"
+            placeholder="Nota"
+            [(ngModel)]="reviewNota"
+            name="reviewNota"
+            min="0"
+            max="10"
+            step="any"
+          />
+
+          <textarea
+            placeholder="Texto da review"
+            [(ngModel)]="reviewTexto"
+            name="reviewTexto"
+          ></textarea>
+
+          <input type="text" placeholder="Link" [(ngModel)]="reviewLink" name="reviewLink" />
+
+          <input type="file" (change)="selecionarImagemReview($event)" />
+
+          <button type="button" (click)="salvarReview()">
+            {{ reviewEditandoId ? 'Salvar alterações' : 'Salvar review' }}
+          </button>
+
+          <button
+            type="button"
+            class="cancel"
+            *ngIf="reviewEditandoId"
+            (click)="cancelarEdicaoReview()"
+          >
+            Cancelar edição
+          </button>
+        </form>
+      </div>
+
+      <div class="admin-panel">
+        <h3>Reviews cadastradas</h3>
+
+        <div class="table-list">
+          <div class="table-item" *ngFor="let r of reviews">
+            <span>{{ r.titulo }}</span>
+
+            <div class="actions">
+              <button class="edit" (click)="editarReview(r)">Editar</button>
+
+              <button class="delete" (click)="excluirReview(r.id)">Excluir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-grid" *ngIf="aba === 'postits'">
+      <div class="admin-panel">
+        <h3>{{ postitEditandoId ? 'Editar post-it' : 'Novo post-it' }}</h3>
+
+        <form class="form">
+          <textarea
+            placeholder="Texto do post-it"
+            [(ngModel)]="postitTexto"
+            name="postitTexto"
+          ></textarea>
+
+          <input type="color" [(ngModel)]="postitCor" name="postitCor" />
+
+          <button type="button" (click)="salvarPostit()">
+            {{ postitEditandoId ? 'Salvar alterações' : 'Salvar post-it' }}
+          </button>
+
+          <button
+            type="button"
+            class="cancel"
+            *ngIf="postitEditandoId"
+            (click)="cancelarEdicaoPostit()"
+          >
+            Cancelar edição
+          </button>
+        </form>
+      </div>
+
+      <div class="admin-panel">
+        <h3>Post-its cadastrados</h3>
+
+        <div class="table-list">
+          <div class="table-item" *ngFor="let p of postits">
+            <span>{{ p.texto }}</span>
+
+            <div class="actions">
+              <button class="edit" (click)="editarPostit(p)">Editar</button>
+
+              <button class="delete" (click)="excluirPostit(p.id)">Excluir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

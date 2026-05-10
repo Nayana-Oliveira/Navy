@@ -1,0 +1,70 @@
+<app-header></app-header>
+
+<section class="page-title">
+  <span class="tag">textos & memórias</span>
+
+  <h1>Posts</h1>
+
+  <p>Textos sobre dias comuns, músicas, praia, pensamentos e coisas que merecem ser guardadas.</p>
+</section>
+
+<section class="search-area">
+  <input
+    type="text"
+    placeholder="Buscar por título, texto ou categoria..."
+    [(ngModel)]="busca"
+    (input)="aplicarFiltros()"
+  />
+</section>
+
+<div class="filters">
+  <button
+    *ngFor="let c of categorias"
+    [class.active]="categoriaSelecionada === c"
+    (click)="filtrarCategoria(c)"
+  >
+    {{ c }}
+  </button>
+</div>
+
+<section class="section">
+  <div class="skeleton-grid" *ngIf="carregando">
+    <div class="skeleton-card" *ngFor="let item of [1, 2, 3]">
+      <div class="skeleton skeleton-image"></div>
+
+      <div class="skeleton skeleton-line small"></div>
+
+      <div class="skeleton skeleton-line large"></div>
+
+      <div class="skeleton skeleton-line"></div>
+
+      <div class="skeleton skeleton-line medium"></div>
+    </div>
+  </div>
+
+  <p *ngIf="!carregando && postsFiltrados.length === 0" class="loading">Nenhum post encontrado.</p>
+
+  <div class="posts-grid" *ngIf="!carregando && postsFiltrados.length > 0">
+    <article class="post-card" *ngFor="let p of postsFiltrados">
+      <img *ngIf="p.imagem" [src]="urlImagem(p.imagem)" />
+
+      <div class="image-placeholder" *ngIf="!p.imagem"></div>
+
+      <span class="tag">
+        {{ p.categoria }}
+      </span>
+
+      <h3>
+        {{ p.titulo }}
+      </h3>
+
+      <p>
+        {{ p.conteudo }}
+      </p>
+
+      <a [routerLink]="['/posts', p.id]"> continuar lendo </a>
+    </article>
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,98 @@
+<app-header></app-header>
+
+<div class="post-detail" *ngIf="carregando">
+  <div class="skeleton skeleton-image" style="height: 460px"></div>
+
+  <div class="post-content">
+    <div class="skeleton skeleton-line small"></div>
+
+    <div class="skeleton skeleton-line large" style="height: 54px"></div>
+
+    <div class="skeleton skeleton-line"></div>
+
+    <div class="skeleton skeleton-line"></div>
+
+    <div class="skeleton skeleton-line medium"></div>
+  </div>
+</div>
+
+<main class="post-detail" *ngIf="post">
+  <img *ngIf="post.imagem" [src]="urlImagem(post.imagem)" class="post-cover" />
+
+  <div class="post-cover" *ngIf="!post.imagem"></div>
+
+  <article class="post-content">
+    <span class="tag">
+      {{ post.categoria }}
+    </span>
+
+    <h1>
+      {{ post.titulo }}
+    </h1>
+
+    <p class="post-date">publicado recentemente</p>
+
+    <div class="share-box">
+      <span> compartilhar </span>
+
+      <button type="button" (click)="copiarLink()">copiar link</button>
+
+      <button type="button" (click)="compartilharWhatsApp()">WhatsApp</button>
+
+      <button type="button" (click)="compartilharTelegram()">Telegram</button>
+
+      <button type="button" (click)="compartilharTwitter()">X/Twitter</button>
+    </div>
+
+    <p class="share-message" *ngIf="mensagemCompartilhar">
+      {{ mensagemCompartilhar }}
+    </p>
+
+    <markdown [data]="post.conteudo"></markdown>
+
+    <div class="embed-box" *ngIf="gerarEmbedYoutube(post.link_video)">
+      <h3>vídeo citado</h3>
+
+      <iframe
+        [src]="gerarEmbedYoutube(post.link_video)"
+        title="YouTube video player"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <div class="embed-box spotify" *ngIf="gerarEmbedSpotify(post.link_musica)">
+      <h3>música para ouvir lendo</h3>
+
+      <iframe
+        [src]="gerarEmbedSpotify(post.link_musica)"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <div class="embed-box spotify" *ngIf="gerarEmbedSpotify(post.link_podcast)">
+      <h3>podcast relacionado</h3>
+
+      <iframe
+        [src]="gerarEmbedSpotify(post.link_podcast)"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <div class="links-box">
+      <strong> links desse post </strong>
+
+      <a *ngIf="post.link_video" [href]="post.link_video" target="_blank"> abrir vídeo </a>
+
+      <a *ngIf="post.link_musica" [href]="post.link_musica" target="_blank"> abrir música </a>
+
+      <a *ngIf="post.link_podcast" [href]="post.link_podcast" target="_blank"> abrir podcast </a>
+    </div>
+  </article>
+</main>
+
+<app-footer></app-footer>

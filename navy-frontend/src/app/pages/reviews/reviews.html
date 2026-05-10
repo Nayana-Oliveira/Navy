@@ -1,0 +1,111 @@
+<app-header></app-header>
+
+<section class="page-title">
+  <span class="tag">opiniões afetivas</span>
+
+  <h1>Reviews</h1>
+
+  <p>
+    Séries, animes, músicas, podcasts, filmes, jogos e outras coisas que merecem uma opinião com
+    carinho.
+  </p>
+</section>
+
+<section class="search-area">
+  <input
+    type="text"
+    placeholder="Buscar por título, tipo ou texto..."
+    [(ngModel)]="busca"
+    (input)="aplicarFiltros()"
+  />
+</section>
+
+<div class="filters">
+  <button *ngFor="let t of tipos" [class.active]="tipoSelecionado === t" (click)="filtrarTipo(t)">
+    {{ t }}
+  </button>
+</div>
+
+<section class="section reviews-section">
+  <div class="skeleton-grid" *ngIf="carregando">
+    <div class="skeleton-card" *ngFor="let item of [1, 2]">
+      <div class="skeleton skeleton-image" style="height: 320px"></div>
+
+      <div class="skeleton skeleton-line small"></div>
+
+      <div class="skeleton skeleton-line large"></div>
+
+      <div class="skeleton skeleton-line"></div>
+
+      <div class="skeleton skeleton-line medium"></div>
+    </div>
+  </div>
+
+  <p *ngIf="!carregando && reviewsFiltradas.length === 0" class="loading">
+    Nenhuma review encontrada.
+  </p>
+
+  <div class="reviews-grid" *ngIf="!carregando && reviewsFiltradas.length > 0">
+    <article class="review-card" *ngFor="let r of reviewsFiltradas" (click)="abrirModal(r)">
+      <img *ngIf="r.imagem" [src]="urlImagem(r.imagem)" />
+
+      <div class="cover-placeholder" *ngIf="!r.imagem"></div>
+
+      <div class="review-content">
+        <span class="tag">
+          {{ r.tipo }}
+        </span>
+
+        <h3>
+          {{ r.titulo }}
+        </h3>
+
+        <div class="nota">
+          {{ r.nota }}
+        </div>
+
+        <p>
+          {{ resumo(r.texto) }}
+        </p>
+
+        <button class="read-more" type="button">ler sentimento completo</button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<div class="modal-overlay" *ngIf="reviewSelecionada" (click)="fecharModal()">
+  <div class="modal-review" (click)="$event.stopPropagation()">
+    <button class="modal-close" type="button" (click)="fecharModal()">×</button>
+
+    <img
+      *ngIf="reviewSelecionada.imagem"
+      [src]="urlImagem(reviewSelecionada.imagem)"
+      class="modal-img"
+    />
+
+    <div class="modal-content">
+      <span class="tag">
+        {{ reviewSelecionada.tipo }}
+      </span>
+
+      <h2>
+        {{ reviewSelecionada.titulo }}
+      </h2>
+
+      <div class="modal-nota">{{ reviewSelecionada.nota }}/10</div>
+
+      <h3>o que eu senti</h3>
+
+      <p>
+        {{ reviewSelecionada.texto }}
+      </p>
+
+      <a *ngIf="reviewSelecionada.link" [href]="reviewSelecionada.link" target="_blank">
+        acessar link
+      </a>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

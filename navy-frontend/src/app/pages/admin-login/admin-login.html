@@ -1,0 +1,18 @@
+<div class="admin-body">
+  <div class="login-card">
+    <h1>Navy</h1>
+    <p>Acesso administrativo</p>
+
+    <form class="form">
+      <input type="email" placeholder="Email" [(ngModel)]="email" name="email" />
+
+      <input type="password" placeholder="Senha" [(ngModel)]="senha" name="senha" />
+
+      <p class="erro" *ngIf="erro">
+        {{ erro }}
+      </p>
+
+      <button type="button" (click)="entrar()">Entrar</button>
+    </form>
+  </div>
+</div>
