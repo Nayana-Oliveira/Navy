@@ -3,7 +3,7 @@ import connection from "./connection.js";
 export async function login(email, senha) {
   const comando = `
     SELECT id, email
-    FROM admin
+    FROM public.admin
     WHERE email = $1 AND senha = MD5($2)
   `;
 

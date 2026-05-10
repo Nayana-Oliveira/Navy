@@ -2,7 +2,7 @@ import connection from "./connection.js";
 
 export async function inserirPost(post) {
   const comando = `
-    INSERT INTO posts
+    INSERT INTO public.posts
     (
       titulo,
       conteudo,
@@ -32,7 +32,7 @@ export async function inserirPost(post) {
 export async function listarPosts() {
   const comando = `
     SELECT *
-    FROM posts
+    FROM public.posts
     ORDER BY criado_em DESC
   `;
 
@@ -44,7 +44,7 @@ export async function listarPosts() {
 export async function buscarPorId(id) {
   const comando = `
     SELECT *
-    FROM posts
+    FROM public.posts
     WHERE id = $1
   `;
 
@@ -55,7 +55,7 @@ export async function buscarPorId(id) {
 
 export async function alterarPost(id, post) {
   const comando = `
-    UPDATE posts
+    UPDATE public.posts
     SET
       titulo = $1,
       conteudo = $2,
@@ -83,7 +83,7 @@ export async function alterarPost(id, post) {
 
 export async function deletarPost(id) {
   const comando = `
-    DELETE FROM posts
+    DELETE FROM public.posts
     WHERE id = $1
   `;
 

@@ -2,7 +2,7 @@ import connection from "./connection.js";
 
 export async function inserirReview(review) {
   const comando = `
-    INSERT INTO reviews
+    INSERT INTO public.reviews
     (
       titulo,
       tipo,
@@ -30,7 +30,7 @@ export async function inserirReview(review) {
 export async function listarReviews() {
   const comando = `
     SELECT *
-    FROM reviews
+    FROM public.reviews
     ORDER BY criado_em DESC
   `;
 
@@ -42,7 +42,7 @@ export async function listarReviews() {
 export async function buscarPorId(id) {
   const comando = `
     SELECT *
-    FROM reviews
+    FROM public.reviews
     WHERE id = $1
   `;
 
@@ -53,7 +53,7 @@ export async function buscarPorId(id) {
 
 export async function alterarReview(id, review) {
   const comando = `
-    UPDATE reviews
+    UPDATE public.reviews
     SET
       titulo = $1,
       tipo = $2,
@@ -79,7 +79,7 @@ export async function alterarReview(id, review) {
 
 export async function deletarReview(id) {
   const comando = `
-    DELETE FROM reviews
+    DELETE FROM public.reviews
     WHERE id = $1
   `;
 

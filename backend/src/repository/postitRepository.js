@@ -2,7 +2,7 @@ import connection from "./connection.js";
 
 export async function inserirPostit(postit) {
   const comando = `
-    INSERT INTO postits (texto, cor)
+    INSERT INTO public.postits (texto, cor)
     VALUES ($1, $2)
     RETURNING id
   `;
@@ -15,7 +15,7 @@ export async function inserirPostit(postit) {
 export async function listarPostits() {
   const comando = `
     SELECT *
-    FROM postits
+    FROM public.postits
     ORDER BY criado_em DESC
   `;
 
@@ -27,7 +27,7 @@ export async function listarPostits() {
 export async function buscarPorId(id) {
   const comando = `
     SELECT *
-    FROM postits
+    FROM public.postits
     WHERE id = $1
   `;
 
@@ -38,7 +38,7 @@ export async function buscarPorId(id) {
 
 export async function alterarPostit(id, postit) {
   const comando = `
-    UPDATE postits
+    UPDATE public.postits
     SET texto = $1,
         cor = $2
     WHERE id = $3
@@ -55,7 +55,7 @@ export async function alterarPostit(id, postit) {
 
 export async function deletarPostit(id) {
   const comando = `
-    DELETE FROM postits
+    DELETE FROM public.postits
     WHERE id = $1
   `;
 
