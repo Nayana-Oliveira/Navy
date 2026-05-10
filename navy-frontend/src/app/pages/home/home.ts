@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Header } from '../../components/header/header';
 import { Post, PostService } from '../../services/post';
 import { Review, ReviewService } from '../../services/review';
 import { Postit, PostitService } from '../../services/postit';
+import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-home',
-  imports: [Header, RouterLink, CommonModule, Footer],
+  imports: [RouterLink, CommonModule, Header, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

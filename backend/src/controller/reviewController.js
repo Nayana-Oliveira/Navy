@@ -59,17 +59,13 @@ endpoints.get("/reviews/:id", async (req, resp) => {
   }
 });
 
-endpoints.put(
-  "/reviews/:id",
-  autenticar,
-  uploadReview.single("imagem"),
-  async (req, resp) => {
+endpoints.put("/reviews/:id", autenticar, uploadReview.single("imagem"), async (req, resp) => {
     try {
       let id = req.params.id;
       let review = req.body;
 
       if (req.file) {
-        review.imagem = "/public/storage/reviews/" + req.file.filename;
+        review.imagem = await uploadImagem(req.file, "reviews");
       }
 
       await service.alterarReview(id, review);

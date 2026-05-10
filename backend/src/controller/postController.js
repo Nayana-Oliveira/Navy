@@ -6,16 +6,12 @@ import { uploadImagem } from "../utils/uploadSupabase.js";
 
 const endpoints = Router();
 
-endpoints.post(
-  "/posts",
-  autenticar,
-  upload.single("imagem"),
-  async (req, resp) => {
+endpoints.post("/posts", autenticar, upload.single("imagem"), async (req, resp) => {
     try {
       let post = req.body;
 
       if (req.file) {
-        post.imagem = "/public/storage/posts/" + req.file.filename;
+        post.imagem = await uploadImagem(req.file, "posts");
       }
 
       let id = await service.inserirPost(post);
@@ -24,8 +20,10 @@ endpoints.post(
         id: id,
       });
     } catch (err) {
+      console.log(err);
+
       resp.status(400).send({
-        erro: err.message,
+        erro: err.message || err.detail || String(err),
       });
     }
   },
