@@ -5,15 +5,20 @@ import adicionarRotas from "./routes.js";
 
 const api = express();
 
-api.use(express.json());
+const corsOptions = {
+  origin: [
+    "http://localhost:4200",
+    "https://navy-blogg.netlify.app",
+    process.env.FRONTEND_URL,
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
-api.use(
-  cors({
-    origin: ["http://localhost:4200", process.env.FRONTEND_URL],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
+api.use(cors(corsOptions));
+api.options("*", cors(corsOptions));
+
+api.use(express.json());
 
 api.get("/", (req, resp) => {
   resp.send("API Navy rodando!");
