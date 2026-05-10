@@ -10,5 +10,5 @@ api.use(cors());
 
 adicionarRotas(api)
 
-const porta = process.env.PORTA;
+const porta = process.env.PORT || process.env.PORTA || 5010;
 api.listen(porta, () => console.log(`Servidor rodando na porta ${porta}`));
