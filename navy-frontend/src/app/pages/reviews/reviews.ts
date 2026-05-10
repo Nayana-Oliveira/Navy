@@ -93,9 +93,9 @@ export class Reviews implements OnInit {
     if (imagem.startsWith('http')) return imagem;
 
     if (imagem.startsWith('/')) {
-      return 'https://navy-blogg.netlify.app/' + imagem;
+      return 'https://navy-7z14.onrender.com' + imagem;
     }
 
-    return 'https://navy-blogg.netlify.app/' + imagem;
+    return 'https://navy-7z14.onrender.com' + imagem;
   }
 }

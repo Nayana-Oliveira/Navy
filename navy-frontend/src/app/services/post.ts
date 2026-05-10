@@ -16,7 +16,7 @@ export interface Post {
   providedIn: 'root',
 })
 export class PostService {
-  private api = 'https://navy-blogg.netlify.app/posts';
+  private api = 'https://navy-7z14.onrender.com/posts';
 
   constructor(private http: HttpClient) {}
 

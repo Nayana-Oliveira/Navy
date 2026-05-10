@@ -15,7 +15,7 @@ export interface Review {
   providedIn: 'root',
 })
 export class ReviewService {
-  private api = 'https://navy-blogg.netlify.app/reviews';
+  private api = 'https://navy-7z14.onrender.com/reviews';
 
   constructor(private http: HttpClient) {}
 

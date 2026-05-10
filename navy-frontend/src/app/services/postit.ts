@@ -12,7 +12,7 @@ export interface Postit {
   providedIn: 'root',
 })
 export class PostitService {
-  private api = 'https://navy-blogg.netlify.app/postits';
+  private api = 'https://navy-7z14.onrender.com/postits';
 
   constructor(private http: HttpClient) {}
 
