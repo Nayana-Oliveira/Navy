@@ -139,9 +139,3 @@ Atualmente as imagens são salvas localmente na pasta `public/storage`. Para pro
 ## Autora
 
 Desenvolvido por Nayana Oliveira.
-
-```
-
-Próximo passo: preparar o backend para produção com `process.env.PORT` e configurar CORS para aceitar o link da Vercel.
-::contentReference[oaicite:1]{index=1}
-```
