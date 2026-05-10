@@ -8,6 +8,10 @@ const api = express();
 api.use(express.json());
 api.use(cors());
 
+api.get('/', (req, resp) => {
+    resp.send('API Navy rodando!');
+})
+
 adicionarRotas(api)
 
 const porta = process.env.PORT || process.env.PORTA || 5010;
