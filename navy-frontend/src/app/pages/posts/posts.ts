@@ -20,7 +20,7 @@ export class Posts implements OnInit {
   busca = '';
   categoriaSelecionada = 'Todos';
 
-  categorias = ['Todos', 'Praia', 'Música', 'Memórias', 'Faculdade'];
+  categorias = ['Todos', 'Pensamentos', 'Música', 'Memórias', 'Faculdade', 'Jogos', 'Poemas', 'Aleatórios'];
 
   constructor(private postService: PostService) {}
 

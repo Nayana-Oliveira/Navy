@@ -1,8 +1,8 @@
 <app-header></app-header>
 
 <section class="hero">
-  <div class="hero-left">
-    <span class="mini-title">blog pessoal</span>
+  <div class="hero-text">
+    <span class="mini-title"> blog pessoal </span>
 
     <h1>dias calmos, música boa e pensamentos perto do mar.</h1>
 
@@ -12,25 +12,26 @@
     </p>
 
     <div class="hero-buttons">
-      <a routerLink="/posts">ver posts</a>
-      <a routerLink="/postits" class="ghost">ler notas</a>
+      <a routerLink="/posts"> ver posts </a>
+
+      <a routerLink="/postits" class="ghost"> ler notas </a>
     </div>
   </div>
 
-  <div class="hero-card">
-    <div class="gradient"></div>
-
-    <p>“o mar também guarda aquilo que a gente não sabe dizer.”</p>
+  <div class="quote-card">
+    <div class="quote-content">
+      <p>“Pensar é um ato. Sentir é um fato”</p>
+    </div>
   </div>
 </section>
 
 <section class="section">
-  <span class="mini-title">últimos textos</span>
+  <span class="mini-title"> últimos textos </span>
 
   <div class="section-header">
     <h2>Posts recentes</h2>
 
-    <a routerLink="/posts">ver todos</a>
+    <a routerLink="/posts"> ver todos </a>
   </div>
 
   <div class="posts-grid">
@@ -58,12 +59,12 @@
 
 <section class="reviews-section">
   <div class="section">
-    <span class="mini-title">opiniões afetivas</span>
+    <span class="mini-title"> opiniões afetivas </span>
 
     <div class="section-header">
       <h2>Reviews recentes</h2>
 
-      <a routerLink="/reviews">ver todas</a>
+      <a routerLink="/reviews"> ver todas </a>
     </div>
 
     <div class="reviews-grid">
@@ -95,15 +96,15 @@
 </section>
 
 <section class="section">
-  <span class="mini-title">frases pequenas</span>
+  <span class="mini-title"> frases pequenas </span>
 
   <div class="section-header">
     <h2>Mural de post-its</h2>
 
-    <a routerLink="/postits">abrir mural</a>
+    <a routerLink="/postits"> abrir mural </a>
   </div>
 
-  <div class="postits-grid">
+  <div class="postits">
     <div class="postit" *ngFor="let p of postits" [style.background]="p.cor">
       <p>
         {{ p.texto }}
