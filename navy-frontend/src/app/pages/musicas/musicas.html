@@ -1,0 +1,75 @@
+<app-header></app-header>
+
+<section class="page-title">
+  <span class="tag">trilha sonora</span>
+  <h1>Músicas que ficam</h1>
+</section>
+
+<section class="search-area">
+  <input
+    type="text"
+    placeholder="Buscar por música, artista, descrição ou mood..."
+    [(ngModel)]="busca"
+    (input)="aplicarBusca()"
+  />
+</section>
+
+<section class="section musicas-page">
+  <div class="skeleton-grid" *ngIf="carregando">
+    <div class="skeleton-card" *ngFor="let item of [1, 2, 3]">
+      <div class="skeleton skeleton-image"></div>
+      <div class="skeleton skeleton-line small"></div>
+      <div class="skeleton skeleton-line large"></div>
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line medium"></div>
+    </div>
+  </div>
+
+  <p class="loading" *ngIf="!carregando && musicasFiltradas.length === 0">
+    Nenhuma música encontrada.
+  </p>
+
+  <div class="musicas-grid" *ngIf="!carregando && musicasFiltradas.length > 0">
+    <article class="musica-card" *ngFor="let m of musicasFiltradas">
+      <div class="musica-top">
+        <span class="tag">
+          {{ m.mood || 'playlist pessoal' }}
+        </span>
+
+        <h2>
+          {{ m.titulo }}
+        </h2>
+
+        <p class="artista" *ngIf="m.artista">
+          {{ m.artista }}
+        </p>
+
+        <p class="descricao" *ngIf="m.descricao">
+          {{ m.descricao }}
+        </p>
+      </div>
+
+      <div class="player-box" *ngIf="gerarEmbedSpotify(m.link)">
+        <iframe
+          [src]="gerarEmbedSpotify(m.link)"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <div class="player-box soundcloud" *ngIf="gerarEmbedSoundCloud(m.link)">
+        <iframe
+          [src]="gerarEmbedSoundCloud(m.link)"
+          frameborder="0"
+          allow="autoplay"
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <a class="music-link" [href]="m.link" target="_blank"> abrir música </a>
+    </article>
+  </div>
+</section>
+
+<app-footer></app-footer>

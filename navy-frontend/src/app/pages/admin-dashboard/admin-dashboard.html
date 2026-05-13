@@ -8,7 +8,11 @@
 
     <a [class.active]="aba === 'postits'" (click)="trocarAba('postits')"> Post-its </a>
 
-    <a (click)="sair()">Sair</a>
+    <a [class.active]="aba === 'musicas'" (click)="trocarAba('musicas')"> Músicas </a>
+
+    <a [class.active]="aba === 'analytics'" (click)="trocarAba('analytics')"> Analytics </a>
+
+    <a (click)="sair()"> Sair </a>
   </aside>
 
   <section class="dashboard-main">
@@ -29,27 +33,36 @@
         <span>Post-its</span>
         <strong>{{ postits.length }}</strong>
       </div>
+
+      <div class="stat-card">
+        <span>Músicas</span>
+        <strong>{{ musicas.length }}</strong>
+      </div>
     </div>
 
-    <p class="mensagem" *ngIf="mensagem">{{ mensagem }}</p>
-    <p class="erro" *ngIf="erro">{{ erro }}</p>
+    <p class="mensagem" *ngIf="mensagem">
+      {{ mensagem }}
+    </p>
+
+    <p class="erro" *ngIf="erro">
+      {{ erro }}
+    </p>
 
     <div class="admin-grid" *ngIf="aba === 'posts'">
       <div class="admin-panel">
-        <h3>{{ postEditandoId ? 'Editar post' : 'Novo post' }}</h3>
+        <h3>
+          {{ postEditandoId ? 'Editar post' : 'Novo post' }}
+        </h3>
 
         <form class="form">
           <input type="text" placeholder="Título" [(ngModel)]="titulo" name="titulo" />
 
           <select [(ngModel)]="categoria" name="categoria">
             <option value="">Categoria</option>
-            <option value="Praia">Pensamentos</option>
+            <option value="Praia">Praia</option>
             <option value="Música">Música</option>
             <option value="Memórias">Memórias</option>
             <option value="Faculdade">Faculdade</option>
-            <option value="Jogo">Jogos</option>
-            <option value="Jogo">Poemas</option>
-            <option value="Jogo">Aleatórios</option>
           </select>
 
           <textarea placeholder="Conteúdo" [(ngModel)]="conteudo" name="conteudo"></textarea>
@@ -111,7 +124,9 @@
 
     <div class="admin-grid" *ngIf="aba === 'reviews'">
       <div class="admin-panel">
-        <h3>{{ reviewEditandoId ? 'Editar review' : 'Nova review' }}</h3>
+        <h3>
+          {{ reviewEditandoId ? 'Editar review' : 'Nova review' }}
+        </h3>
 
         <form class="form">
           <input type="text" placeholder="Título" [(ngModel)]="reviewTitulo" name="reviewTitulo" />
@@ -124,7 +139,7 @@
             <option value="Música">Música</option>
             <option value="Podcast">Podcast</option>
             <option value="Livro">Livro</option>
-            <option value="Livro">Jogo</option>
+            <option value="Jogo">Jogo</option>
           </select>
 
           <input
@@ -181,7 +196,9 @@
 
     <div class="admin-grid" *ngIf="aba === 'postits'">
       <div class="admin-panel">
-        <h3>{{ postitEditandoId ? 'Editar post-it' : 'Novo post-it' }}</h3>
+        <h3>
+          {{ postitEditandoId ? 'Editar post-it' : 'Novo post-it' }}
+        </h3>
 
         <form class="form">
           <textarea
@@ -219,6 +236,125 @@
 
               <button class="delete" (click)="excluirPostit(p.id)">Excluir</button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-grid" *ngIf="aba === 'musicas'">
+      <div class="admin-panel">
+        <h3>
+          {{ musicaEditandoId ? 'Editar música' : 'Nova música' }}
+        </h3>
+
+        <form class="form">
+          <input
+            type="text"
+            placeholder="Título da música"
+            [(ngModel)]="musicaTitulo"
+            name="musicaTitulo"
+          />
+
+          <input
+            type="text"
+            placeholder="Artista"
+            [(ngModel)]="musicaArtista"
+            name="musicaArtista"
+          />
+
+          <textarea
+            placeholder="Descrição / o que essa música te faz sentir"
+            [(ngModel)]="musicaDescricao"
+            name="musicaDescricao"
+          ></textarea>
+
+          <input
+            type="text"
+            placeholder="Link do Spotify ou SoundCloud"
+            [(ngModel)]="musicaLink"
+            name="musicaLink"
+          />
+
+          <input
+            type="text"
+            placeholder="Mood, exemplo: fim de tarde, saudade, praia..."
+            [(ngModel)]="musicaMood"
+            name="musicaMood"
+          />
+
+          <button type="button" (click)="salvarMusica()">
+            {{ musicaEditandoId ? 'Salvar alterações' : 'Salvar música' }}
+          </button>
+
+          <button
+            type="button"
+            class="cancel"
+            *ngIf="musicaEditandoId"
+            (click)="cancelarEdicaoMusica()"
+          >
+            Cancelar edição
+          </button>
+        </form>
+      </div>
+
+      <div class="admin-panel">
+        <h3>Músicas cadastradas</h3>
+
+        <div class="table-list">
+          <div class="table-item" *ngFor="let m of musicas">
+            <span> {{ m.titulo }} — {{ m.artista }} </span>
+
+            <div class="actions">
+              <button class="edit" (click)="editarMusica(m)">Editar</button>
+
+              <button class="delete" (click)="excluirMusica(m.id)">Excluir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="analytics-page" *ngIf="aba === 'analytics'">
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <h3>Posts por categoria</h3>
+
+          <div class="analytics-item" *ngFor="let item of postsPorCategoria">
+            <span>{{ item.nome }}</span>
+            <strong>{{ item.quantidade }}</strong>
+          </div>
+        </div>
+
+        <div class="analytics-card">
+          <h3>Reviews por tipo</h3>
+
+          <div class="analytics-item" *ngFor="let item of reviewsPorTipo">
+            <span>{{ item.nome }}</span>
+            <strong>{{ item.quantidade }}</strong>
+          </div>
+        </div>
+
+        <div class="analytics-card">
+          <h3>Visão geral</h3>
+
+          <div class="analytics-total">
+            <span>Posts</span>
+            <strong>{{ posts.length }}</strong>
+          </div>
+
+          <div class="analytics-total">
+            <span>Reviews</span>
+            <strong>{{ reviews.length }}</strong>
+          </div>
+
+          <div class="analytics-total">
+            <span>Post-its</span>
+            <strong>{{ postits.length }}</strong>
+          </div>
+
+          <div class="analytics-total">
+            <span>Músicas</span>
+            <strong>{{ musicas.length }}</strong>
           </div>
         </div>
       </div>

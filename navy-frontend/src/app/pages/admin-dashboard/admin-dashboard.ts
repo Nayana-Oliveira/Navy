@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { AdminService } from '../../services/admin';
+
 import { Post, PostService } from '../../services/post';
 import { Review, ReviewService } from '../../services/review';
 import { Postit, PostitService } from '../../services/postit';
+import { Musica, MusicaService } from '../../services/musica';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -13,13 +16,13 @@ import { Postit, PostitService } from '../../services/postit';
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
-
 export class AdminDashboard implements OnInit {
   aba = 'posts';
 
   posts: Post[] = [];
   reviews: Review[] = [];
   postits: Postit[] = [];
+  musicas: Musica[] = [];
 
   postsPorCategoria: any[] = [];
   reviewsPorTipo: any[] = [];
@@ -28,30 +31,32 @@ export class AdminDashboard implements OnInit {
   erro = '';
 
   postEditandoId?: number;
-
   titulo = '';
   categoria = '';
   conteudo = '';
   link_video = '';
   link_musica = '';
   link_podcast = '';
-
   imagem?: File;
 
   reviewEditandoId?: number;
-
   reviewTitulo = '';
   reviewTipo = '';
   reviewNota = 0;
   reviewTexto = '';
   reviewLink = '';
-
   reviewImagem?: File;
 
   postitEditandoId?: number;
-
   postitTexto = '';
   postitCor = '#f6d77a';
+
+  musicaEditandoId?: number;
+  musicaTitulo = '';
+  musicaArtista = '';
+  musicaDescricao = '';
+  musicaLink = '';
+  musicaMood = '';
 
   constructor(
     private adminService: AdminService,
@@ -59,6 +64,7 @@ export class AdminDashboard implements OnInit {
     private postService: PostService,
     private reviewService: ReviewService,
     private postitService: PostitService,
+    private musicaService: MusicaService,
   ) {}
 
   ngOnInit() {
@@ -67,7 +73,6 @@ export class AdminDashboard implements OnInit {
 
   trocarAba(aba: string) {
     this.aba = aba;
-
     this.mensagem = '';
     this.erro = '';
   }
@@ -76,19 +81,16 @@ export class AdminDashboard implements OnInit {
     this.carregarPosts();
     this.carregarReviews();
     this.carregarPostits();
+    this.carregarMusicas();
   }
 
   carregarPosts() {
     this.postService.listar().subscribe({
       next: (res) => {
         this.posts = res;
-
         this.gerarAnalyticsPosts();
       },
-
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => console.log(err),
     });
   }
 
@@ -96,13 +98,9 @@ export class AdminDashboard implements OnInit {
     this.reviewService.listar().subscribe({
       next: (res) => {
         this.reviews = res;
-
         this.gerarAnalyticsReviews();
       },
-
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => console.log(err),
     });
   }
 
@@ -111,10 +109,16 @@ export class AdminDashboard implements OnInit {
       next: (res) => {
         this.postits = res;
       },
+      error: (err) => console.log(err),
+    });
+  }
 
-      error: (err) => {
-        console.log(err);
+  carregarMusicas() {
+    this.musicaService.listar().subscribe({
+      next: (res) => {
+        this.musicas = res;
       },
+      error: (err) => console.log(err),
     });
   }
 
@@ -181,12 +185,9 @@ export class AdminDashboard implements OnInit {
       this.postService.editar(this.postEditandoId, formData).subscribe({
         next: () => {
           this.mensagem = 'Post editado com sucesso!';
-
           this.cancelarEdicaoPost();
-
           this.carregarPosts();
         },
-
         error: (err) => {
           this.erro = err.error?.erro || 'Erro ao editar post.';
         },
@@ -195,12 +196,9 @@ export class AdminDashboard implements OnInit {
       this.postService.criar(formData).subscribe({
         next: () => {
           this.mensagem = 'Post cadastrado com sucesso!';
-
           this.limparPost();
-
           this.carregarPosts();
         },
-
         error: (err) => {
           this.erro = err.error?.erro || 'Erro ao cadastrar post.';
         },
@@ -224,19 +222,13 @@ export class AdminDashboard implements OnInit {
     if (!id) return;
 
     this.postService.excluir(id).subscribe({
-      next: () => {
-        this.carregarPosts();
-      },
-
-      error: (err) => {
-        console.log(err);
-      },
+      next: () => this.carregarPosts(),
+      error: (err) => console.log(err),
     });
   }
 
   cancelarEdicaoPost() {
     this.postEditandoId = undefined;
-
     this.limparPost();
   }
 
@@ -244,11 +236,9 @@ export class AdminDashboard implements OnInit {
     this.titulo = '';
     this.categoria = '';
     this.conteudo = '';
-
     this.link_video = '';
     this.link_musica = '';
     this.link_podcast = '';
-
     this.imagem = undefined;
   }
 
@@ -276,12 +266,9 @@ export class AdminDashboard implements OnInit {
       this.reviewService.editar(this.reviewEditandoId, formData).subscribe({
         next: () => {
           this.mensagem = 'Review editada com sucesso!';
-
           this.cancelarEdicaoReview();
-
           this.carregarReviews();
         },
-
         error: (err) => {
           this.erro = err.error?.erro || 'Erro ao editar review.';
         },
@@ -290,12 +277,9 @@ export class AdminDashboard implements OnInit {
       this.reviewService.criar(formData).subscribe({
         next: () => {
           this.mensagem = 'Review cadastrada com sucesso!';
-
           this.limparReview();
-
           this.carregarReviews();
         },
-
         error: (err) => {
           this.erro = err.error?.erro || 'Erro ao cadastrar review.';
         },
@@ -317,19 +301,13 @@ export class AdminDashboard implements OnInit {
     if (!id) return;
 
     this.reviewService.excluir(id).subscribe({
-      next: () => {
-        this.carregarReviews();
-      },
-
-      error: (err) => {
-        console.log(err);
-      },
+      next: () => this.carregarReviews(),
+      error: (err) => console.log(err),
     });
   }
 
   cancelarEdicaoReview() {
     this.reviewEditandoId = undefined;
-
     this.limparReview();
   }
 
@@ -339,7 +317,6 @@ export class AdminDashboard implements OnInit {
     this.reviewNota = 0;
     this.reviewTexto = '';
     this.reviewLink = '';
-
     this.reviewImagem = undefined;
   }
 
@@ -356,12 +333,9 @@ export class AdminDashboard implements OnInit {
       this.postitService.editar(this.postitEditandoId, postit).subscribe({
         next: () => {
           this.mensagem = 'Post-it editado com sucesso!';
-
           this.cancelarEdicaoPostit();
-
           this.carregarPostits();
         },
-
         error: (err) => {
           this.erro = err.error?.erro || 'Erro ao editar post-it.';
         },
@@ -370,12 +344,9 @@ export class AdminDashboard implements OnInit {
       this.postitService.criar(postit).subscribe({
         next: () => {
           this.mensagem = 'Post-it cadastrado com sucesso!';
-
           this.limparPostit();
-
           this.carregarPostits();
         },
-
         error: (err) => {
           this.erro = err.error?.erro || 'Erro ao cadastrar post-it.';
         },
@@ -385,7 +356,6 @@ export class AdminDashboard implements OnInit {
 
   editarPostit(postit: Postit) {
     this.postitEditandoId = postit.id;
-
     this.postitTexto = postit.texto;
     this.postitCor = postit.cor;
   }
@@ -394,19 +364,13 @@ export class AdminDashboard implements OnInit {
     if (!id) return;
 
     this.postitService.excluir(id).subscribe({
-      next: () => {
-        this.carregarPostits();
-      },
-
-      error: (err) => {
-        console.log(err);
-      },
+      next: () => this.carregarPostits(),
+      error: (err) => console.log(err),
     });
   }
 
   cancelarEdicaoPostit() {
     this.postitEditandoId = undefined;
-
     this.limparPostit();
   }
 
@@ -415,9 +379,77 @@ export class AdminDashboard implements OnInit {
     this.postitCor = '#f6d77a';
   }
 
+  salvarMusica() {
+    this.mensagem = '';
+    this.erro = '';
+
+    const musica: Musica = {
+      titulo: this.musicaTitulo,
+      artista: this.musicaArtista,
+      descricao: this.musicaDescricao,
+      link: this.musicaLink,
+      mood: this.musicaMood,
+    };
+
+    if (this.musicaEditandoId) {
+      this.musicaService.editar(this.musicaEditandoId, musica).subscribe({
+        next: () => {
+          this.mensagem = 'Música editada com sucesso!';
+          this.cancelarEdicaoMusica();
+          this.carregarMusicas();
+        },
+        error: (err) => {
+          this.erro = err.error?.erro || 'Erro ao editar música.';
+        },
+      });
+    } else {
+      this.musicaService.criar(musica).subscribe({
+        next: () => {
+          this.mensagem = 'Música cadastrada com sucesso!';
+          this.limparMusica();
+          this.carregarMusicas();
+        },
+        error: (err) => {
+          this.erro = err.error?.erro || 'Erro ao cadastrar música.';
+        },
+      });
+    }
+  }
+
+  editarMusica(musica: Musica) {
+    this.musicaEditandoId = musica.id;
+
+    this.musicaTitulo = musica.titulo;
+    this.musicaArtista = musica.artista || '';
+    this.musicaDescricao = musica.descricao || '';
+    this.musicaLink = musica.link;
+    this.musicaMood = musica.mood || '';
+  }
+
+  excluirMusica(id?: number) {
+    if (!id) return;
+
+    this.musicaService.excluir(id).subscribe({
+      next: () => this.carregarMusicas(),
+      error: (err) => console.log(err),
+    });
+  }
+
+  cancelarEdicaoMusica() {
+    this.musicaEditandoId = undefined;
+    this.limparMusica();
+  }
+
+  limparMusica() {
+    this.musicaTitulo = '';
+    this.musicaArtista = '';
+    this.musicaDescricao = '';
+    this.musicaLink = '';
+    this.musicaMood = '';
+  }
+
   sair() {
     this.adminService.sair();
-
     this.router.navigate(['/admin']);
   }
 }
