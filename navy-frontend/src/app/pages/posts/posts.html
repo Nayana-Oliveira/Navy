@@ -50,19 +50,21 @@
 
       <div class="image-placeholder" *ngIf="!p.imagem"></div>
 
-      <span class="tag">
-        {{ p.categoria }}
-      </span>
+      <div class="post-content">
+        <span class="tag">
+          {{ p.categoria }}
+        </span>
 
-      <h3>
-        {{ p.titulo }}
-      </h3>
+        <h3>
+          {{ p.titulo }}
+        </h3>
 
-      <p>
-        {{ p.conteudo }}
-      </p>
+        <p class="preview">
+          {{ p.conteudo }}
+        </p>
 
-      <a [routerLink]="['/posts', p.id]"> continuar lendo </a>
+        <a [routerLink]="['/posts', p.id]"> continuar lendo </a>
+      </div>
     </article>
   </div>
 </section>
