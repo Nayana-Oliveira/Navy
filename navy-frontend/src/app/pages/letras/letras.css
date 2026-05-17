@@ -1,0 +1,79 @@
+.hero {
+  padding: 7rem;
+}
+
+.hero span {
+  color: #c97042;
+  letter-spacing: 3px;
+  font-size: 0.7rem;
+}
+
+.hero h1 {
+  font-size: 4rem;
+  color: #412d26;
+}
+
+.grid {
+  padding: 0 7% 7rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  height: 550px;
+  padding: 40px;
+  border-radius: 35px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: black;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+}
+
+.mini h4 {
+  font-size: 1.8rem;
+}
+
+.mini p {
+  font-size: 1.2rem;
+}
+
+.trecho {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #00000070;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal {
+  width: 700px;
+  max-height: 80vh;
+  overflow: auto;
+  background: white;
+  padding: 40px;
+  border-radius: 30px;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+}
+
+button {
+  margin-top: 30px;
+}

@@ -32,18 +32,6 @@
 
     <p class="post-date">publicado recentemente</p>
 
-    <div class="share-box">
-      <span> compartilhar </span>
-
-      <button type="button" (click)="copiarLink()">copiar link</button>
-
-      <button type="button" (click)="compartilharWhatsApp()">WhatsApp</button>
-
-      <button type="button" (click)="compartilharTelegram()">Telegram</button>
-
-      <button type="button" (click)="compartilharTwitter()">X/Twitter</button>
-    </div>
-
     <p class="share-message" *ngIf="mensagemCompartilhar">
       {{ mensagemCompartilhar }}
     </p>

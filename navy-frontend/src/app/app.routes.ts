@@ -10,6 +10,7 @@ import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
 import { authGuard } from './guards/auth-guard';
 import { NotFound } from './pages/not-found/not-found';
 import { Musicas } from './pages/musicas/musicas';
+import { Letras } from './pages/letras/letras';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'postits', component: Postits },
   { path: 'sobre', component: Sobre },
   { path: 'admin', component: AdminLogin },
+  { path: 'letras', component: Letras},
   { path: 'admin/dashboard', component: AdminDashboard , canActivate: [authGuard]},
   {path: 'musicas', component: Musicas},
   {path: '**', component: NotFound}

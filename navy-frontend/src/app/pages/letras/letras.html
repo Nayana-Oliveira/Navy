@@ -1,0 +1,53 @@
+<app-header></app-header>
+
+<section class="hero">
+  <span> trechos & canções </span>
+
+  <h1>Letras que que gosto muito</h1>
+
+  <p>músicas que me fizeram pensar.</p>
+</section>
+
+<section class="grid">
+  <div
+    class="card"
+    *ngFor="let l of letras"
+    (click)="abrir(l)"
+    [style.background]="l.cor || '#97A08D'"
+  >
+    <div class="mini">
+      <h4>
+        {{ l.musica }}
+      </h4>
+
+      <p>
+        {{ l.artista }}
+      </p>
+    </div>
+
+    <div class="trecho">
+      {{ l.trecho }}
+    </div>
+  </div>
+</section>
+
+<div class="overlay" *ngIf="modal" (click)="fechar()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h2>
+      {{ selecionada?.musica }}
+    </h2>
+
+    <h4>
+      {{ selecionada?.artista }}
+    </h4>
+
+    <pre
+      >{{ selecionada?.letra }}
+</pre
+    >
+
+    <button (click)="fechar()">fechar</button>
+  </div>
+</div>
+
+<app-footer></app-footer>
