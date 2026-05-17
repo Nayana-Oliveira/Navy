@@ -38,18 +38,14 @@
     <article class="post-card" *ngFor="let p of posts">
       <img *ngIf="p.imagem" [src]="urlImagem(p.imagem)" alt="" />
 
+      <div class="image-placeholder" *ngIf="!p.imagem"></div>
+
       <div class="post-content">
-        <span class="categoria">
-          {{ p.categoria }}
-        </span>
+        <span class="tag">{{ p.categoria }}</span>
 
-        <h3>
-          {{ p.titulo }}
-        </h3>
+        <h3>{{ p.titulo }}</h3>
 
-        <p>
-          {{ resumo(p.conteudo, 220) }}
-        </p>
+        <p>{{ resumo(p.conteudo, 260) }}</p>
 
         <a [routerLink]="['/posts', p.id]"> continuar lendo </a>
       </div>

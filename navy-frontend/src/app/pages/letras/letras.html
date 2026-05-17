@@ -1,9 +1,9 @@
 <app-header></app-header>
 
-<section class="hero">
-  <span> trechos & canções </span>
+<section class="page-title">
+  <span class="tag">trechos & canções</span>
 
-  <h1>Letras que que gosto muito</h1>
+  <h1>Letras</h1>
 
   <p>músicas que me fizeram pensar.</p>
 </section>
@@ -31,22 +31,32 @@
   </div>
 </section>
 
-<div class="overlay" *ngIf="modal" (click)="fechar()">
-  <div class="modal" (click)="$event.stopPropagation()">
-    <h2>
-      {{ selecionada?.musica }}
-    </h2>
+<div
+  class="overlay"
+  *ngIf="modal"
+  (click)="fechar()"
+>
+  <div
+    class="modal"
+    [style.background]="selecionada?.cor || '#97A08D'"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="modal-top">
+      <h2>{{ selecionada?.musica }}</h2>
+      <h4>{{ selecionada?.artista }}</h4>
 
-    <h4>
-      {{ selecionada?.artista }}
-    </h4>
+      <p class="album" *ngIf="selecionada?.album">
+        {{ selecionada?.album }}
+      </p>
+    </div>
 
-    <pre
-      >{{ selecionada?.letra }}
-</pre
-    >
+    <div class="letra-completa">
+      {{ selecionada?.letra }}
+    </div>
 
-    <button (click)="fechar()">fechar</button>
+    <button class="fechar" (click)="fechar()">
+      fechar
+    </button>
   </div>
 </div>
 

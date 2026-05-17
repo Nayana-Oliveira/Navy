@@ -50,63 +50,120 @@
 
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 32px;
+  align-items: stretch;
 }
 
 .post-card {
+  height: 680px;
   background: var(--card);
-  padding: 18px;
-  border-radius: 28px;
+  border-radius: 32px;
+  overflow: hidden;
   box-shadow: 0 18px 40px var(--sombra);
   display: flex;
   flex-direction: column;
-  height: 100%;
-  min-height: 520px;
+}
+
+.post-card img,
+.image-placeholder {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 0;
+  margin: 0;
 }
 
 .image-placeholder {
-  height: 210px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, var(--areia), var(--laranja));
-  margin-bottom: 20px;
+  background: linear-gradient(135deg, #c57b52, #817452);
+}
+
+.post-content {
+  padding: 34px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-content .tag,
+.post-card .tag {
+  margin-bottom: 18px;
+}
+
+.post-content h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  line-height: 1.08;
+  margin: 0 0 22px;
+}
+
+.post-card h3 {
+  font-size: 34px;
+  line-height: 1.08;
+  margin-bottom: 22px;
+}
+
+.post-card .preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.8;
+  color: var(--soft-text);
+}
+
+.post-card {
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-content p {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.75;
+  color: var(--soft-text);
+  margin: 0;
+}
+
+.post-content a {
+  margin-top: auto;
+  padding-top: 28px;
+  color: var(--terracota);
+  font-weight: 800;
+}
+
+.post-card a {
+  margin-top: auto;
+  padding-top: 26px;
+  color: var(--terracota);
+  font-weight: 800;
+}
+
+@media (max-width: 1000px) {
+  .posts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-card {
+    height: auto;
+    min-height: 560px;
+  }
 }
 
 .post-card h3 {
   margin-top: 10px;
   font-family: 'DM Serif Display', serif;
   font-size: 28px;
-}
-
-.post-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.post-content p {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.post-content a {
-  margin-top: auto;
-  padding-top: 18px;
-}
-
-.post-card p {
-  margin-top: 10px;
-  line-height: 1.6;
-  color: rgba(63, 42, 34, 0.75);
-}
-
-.post-card a {
-  display: inline-block;
-  margin-top: 18px;
-  font-weight: 700;
-  color: var(--terracota);
 }
 
 .reviews-section {

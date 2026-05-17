@@ -23,9 +23,13 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 28px;
+  align-items: stretch;
 }
 
 .musica-card {
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
   background: var(--card);
   border-radius: 32px;
   padding: 28px;
@@ -63,6 +67,7 @@
   overflow: hidden;
   border-radius: 22px;
   background: #fff8ef;
+  margin-top: auto;
 }
 
 .player-box iframe {
