@@ -2,15 +2,15 @@ import connection from "./connection.js";
 
 export async function inserirLetra(letra) {
   const comando = `
-INSERT INTO public.letras
-(
-  musica,
-  artista,
-  album,
-  trecho,
-  cor
-)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO public.letras
+    (
+      musica,
+      artista,
+      album,
+      trecho,
+      cor
+    )
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING id
   `;
 
@@ -57,9 +57,8 @@ export async function alterarLetra(id, letra) {
       artista = $2,
       album = $3,
       trecho = $4,
-      letra = $5,
-      cor = $6
-    WHERE id = $7
+      cor = $5
+    WHERE id = $6
   `;
 
   const resposta = await connection.query(comando, [
@@ -67,7 +66,6 @@ export async function alterarLetra(id, letra) {
     letra.artista || null,
     letra.album || null,
     letra.trecho,
-    letra.letra,
     letra.cor || "#8d9a87",
     id,
   ]);
