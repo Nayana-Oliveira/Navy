@@ -8,7 +8,6 @@ export async function inserirLetra(letra) {
       artista,
       album,
       trecho,
-      letra,
       cor
     )
     VALUES ($1, $2, $3, $4, $5, $6)

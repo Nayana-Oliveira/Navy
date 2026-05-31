@@ -65,7 +65,6 @@ export class AdminDashboard implements OnInit {
   letraArtista = '';
   letraAlbum = '';
   letraTrecho = '';
-  letraCompleta = '';
   letraCor = '#98A08F';
 
   constructor(
@@ -483,7 +482,6 @@ export class AdminDashboard implements OnInit {
       artista: this.letraArtista,
       album: this.letraAlbum,
       trecho: this.letraTrecho,
-      letra: this.letraCompleta,
       cor: this.letraCor,
     };
 
@@ -518,7 +516,6 @@ export class AdminDashboard implements OnInit {
     this.letraArtista = letra.artista || '';
     this.letraAlbum = letra.album || '';
     this.letraTrecho = letra.trecho;
-    this.letraCompleta = letra.letra;
     this.letraCor = letra.cor || '#98A08F';
   }
 
@@ -541,7 +538,6 @@ export class AdminDashboard implements OnInit {
     this.letraArtista = '';
     this.letraAlbum = '';
     this.letraTrecho = '';
-    this.letraCompleta = '';
     this.letraCor = '#98A08F';
   }
 }

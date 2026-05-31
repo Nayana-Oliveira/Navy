@@ -9,10 +9,6 @@ export async function inserirLetra(letra) {
     throw new Error("Trecho obrigatório.");
   }
 
-  if (!letra.letra) {
-    throw new Error("Letra completa obrigatória.");
-  }
-
   return await repository.inserirLetra(letra);
 }
 
