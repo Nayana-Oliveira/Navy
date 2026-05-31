@@ -2,14 +2,14 @@ import connection from "./connection.js";
 
 export async function inserirLetra(letra) {
   const comando = `
-    INSERT INTO public.letras
-    (
-      musica,
-      artista,
-      album,
-      trecho,
-      cor
-    )
+INSERT INTO public.letras
+(
+  musica,
+  artista,
+  album,
+  trecho,
+  cor
+)
     VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING id
   `;
@@ -19,7 +19,6 @@ export async function inserirLetra(letra) {
     letra.artista || null,
     letra.album || null,
     letra.trecho,
-    letra.letra,
     letra.cor || "#8d9a87",
   ]);
 
