@@ -9,6 +9,7 @@ import { Post, PostService } from '../../services/post';
 import { Review, ReviewService } from '../../services/review';
 import { Postit, PostitService } from '../../services/postit';
 import { Musica, MusicaService } from '../../services/musica';
+import { Letra, LetraService } from '../../services/letra';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -23,6 +24,7 @@ export class AdminDashboard implements OnInit {
   reviews: Review[] = [];
   postits: Postit[] = [];
   musicas: Musica[] = [];
+  letras: Letra[] = [];
 
   postsPorCategoria: any[] = [];
   reviewsPorTipo: any[] = [];
@@ -58,6 +60,14 @@ export class AdminDashboard implements OnInit {
   musicaLink = '';
   musicaMood = '';
 
+  letraEditandoId?: number;
+  letraMusica = '';
+  letraArtista = '';
+  letraAlbum = '';
+  letraTrecho = '';
+  letraCompleta = '';
+  letraCor = '#98A08F';
+
   constructor(
     private adminService: AdminService,
     private router: Router,
@@ -65,6 +75,7 @@ export class AdminDashboard implements OnInit {
     private reviewService: ReviewService,
     private postitService: PostitService,
     private musicaService: MusicaService,
+    private letraService: LetraService,
   ) {}
 
   ngOnInit() {
@@ -82,6 +93,7 @@ export class AdminDashboard implements OnInit {
     this.carregarReviews();
     this.carregarPostits();
     this.carregarMusicas();
+    this.carregarLetras();
   }
 
   carregarPosts() {
@@ -451,5 +463,85 @@ export class AdminDashboard implements OnInit {
   sair() {
     this.adminService.sair();
     this.router.navigate(['/admin']);
+  }
+
+  carregarLetras() {
+    this.letraService.listar().subscribe({
+      next: (res) => {
+        this.letras = res;
+      },
+      error: (err) => console.log(err),
+    });
+  }
+
+  salvarLetra() {
+    this.mensagem = '';
+    this.erro = '';
+
+    const letra: Letra = {
+      musica: this.letraMusica,
+      artista: this.letraArtista,
+      album: this.letraAlbum,
+      trecho: this.letraTrecho,
+      letra: this.letraCompleta,
+      cor: this.letraCor,
+    };
+
+    if (this.letraEditandoId) {
+      this.letraService.editar(this.letraEditandoId, letra).subscribe({
+        next: () => {
+          this.mensagem = 'Letra editada com sucesso!';
+          this.cancelarEdicaoLetra();
+          this.carregarLetras();
+        },
+        error: (err) => {
+          this.erro = err.error?.erro || 'Erro ao editar letra.';
+        },
+      });
+    } else {
+      this.letraService.criar(letra).subscribe({
+        next: () => {
+          this.mensagem = 'Letra cadastrada com sucesso!';
+          this.limparLetra();
+          this.carregarLetras();
+        },
+        error: (err) => {
+          this.erro = err.error?.erro || 'Erro ao cadastrar letra.';
+        },
+      });
+    }
+  }
+
+  editarLetra(letra: Letra) {
+    this.letraEditandoId = letra.id;
+    this.letraMusica = letra.musica;
+    this.letraArtista = letra.artista || '';
+    this.letraAlbum = letra.album || '';
+    this.letraTrecho = letra.trecho;
+    this.letraCompleta = letra.letra;
+    this.letraCor = letra.cor || '#98A08F';
+  }
+
+  excluirLetra(id?: number) {
+    if (!id) return;
+
+    this.letraService.excluir(id).subscribe({
+      next: () => this.carregarLetras(),
+      error: (err) => console.log(err),
+    });
+  }
+
+  cancelarEdicaoLetra() {
+    this.letraEditandoId = undefined;
+    this.limparLetra();
+  }
+
+  limparLetra() {
+    this.letraMusica = '';
+    this.letraArtista = '';
+    this.letraAlbum = '';
+    this.letraTrecho = '';
+    this.letraCompleta = '';
+    this.letraCor = '#98A08F';
   }
 }

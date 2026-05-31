@@ -3,13 +3,10 @@
     <h1>Navy</h1>
 
     <a [class.active]="aba === 'posts'" (click)="trocarAba('posts')"> Posts </a>
-
     <a [class.active]="aba === 'reviews'" (click)="trocarAba('reviews')"> Reviews </a>
-
     <a [class.active]="aba === 'postits'" (click)="trocarAba('postits')"> Post-its </a>
-
     <a [class.active]="aba === 'musicas'" (click)="trocarAba('musicas')"> Músicas </a>
-
+    <a [class.active]="aba === 'letras'" (click)="trocarAba('letras')"> Letras </a>
     <a [class.active]="aba === 'analytics'" (click)="trocarAba('analytics')"> Analytics </a>
 
     <a (click)="sair()"> Sair </a>
@@ -318,6 +315,84 @@
       </div>
     </div>
 
+    <div class="admin-grid" *ngIf="aba === 'letras'">
+      <div class="admin-panel">
+        <h3>
+          {{ letraEditandoId ? 'Editar letra' : 'Nova letra' }}
+        </h3>
+
+        <form class="form">
+          <input
+            type="text"
+            placeholder="Nome da música"
+            [(ngModel)]="letraMusica"
+            name="letraMusica"
+          />
+
+          <input type="text" placeholder="Artista" [(ngModel)]="letraArtista" name="letraArtista" />
+
+          <input type="text" placeholder="Álbum" [(ngModel)]="letraAlbum" name="letraAlbum" />
+
+          <textarea
+            placeholder="Trecho que aparece no card"
+            [(ngModel)]="letraTrecho"
+            name="letraTrecho"
+            rows="4"
+          ></textarea>
+
+          <textarea
+            placeholder="Letra completa"
+            [(ngModel)]="letraCompleta"
+            name="letraCompleta"
+            rows="10"
+          ></textarea>
+
+          <label> Cor do card </label>
+
+          <input type="color" [(ngModel)]="letraCor" name="letraCor" />
+
+          <button type="button" (click)="salvarLetra()">
+            {{ letraEditandoId ? 'Salvar alterações' : 'Cadastrar letra' }}
+          </button>
+
+          <button
+            *ngIf="letraEditandoId"
+            type="button"
+            class="cancel"
+            (click)="cancelarEdicaoLetra()"
+          >
+            Cancelar edição
+          </button>
+        </form>
+      </div>
+
+      <div class="admin-panel">
+        <h3>Letras cadastradas</h3>
+
+        <div class="table-list">
+          <div class="table-item" *ngFor="let l of letras">
+            <div>
+              <strong>
+                {{ l.musica }}
+              </strong>
+
+              <br />
+
+              <small>
+                {{ l.artista }}
+              </small>
+            </div>
+
+            <div class="actions">
+              <button class="edit" (click)="editarLetra(l)">Editar</button>
+
+              <button class="delete" (click)="excluirLetra(l.id)">Excluir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="analytics-page" *ngIf="aba === 'analytics'">
       <div class="analytics-grid">
         <div class="analytics-card">
@@ -359,6 +434,11 @@
           <div class="analytics-total">
             <span>Músicas</span>
             <strong>{{ musicas.length }}</strong>
+          </div>
+
+          <div class="stat-card">
+            <span>Letras</span>
+            <strong>{{ letras.length }}</strong>
           </div>
         </div>
       </div>
